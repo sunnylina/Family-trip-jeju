@@ -4,11 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>혜린이와 함께 하는 제주 힐링 여행</title>
-  <!-- Google Fonts for cute & readable typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     :root {
@@ -19,7 +17,6 @@
       --pastel-yellow: #fff9e6;
       --pastel-blue: #e8f4fd;
       --pastel-green: #eafaf1;
-      --pastel-purple: #f3e8fd;
       --bg: #fffbf7;
       --card-bg: #ffffff;
       --text-main: #2d3436;
@@ -39,8 +36,6 @@
       padding: 16px 14px 60px;
     }
     .container { max-width: 740px; margin: 0 auto; }
-    
-    /* Cute Header */
     header {
       text-align: center;
       padding: 32px 18px 26px;
@@ -71,17 +66,9 @@
       letter-spacing: -0.5px;
       text-shadow: 0 2px 8px rgba(0,0,0,0.12);
     }
-    header p {
-      font-size: 0.95rem;
-      opacity: 0.98;
-      font-weight: 500;
-    }
+    header p { font-size: 0.95rem; opacity: 0.98; font-weight: 500; }
     .badge-bar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 16px;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px;
     }
     .badge {
       background: rgba(255, 255, 255, 0.32);
@@ -92,8 +79,6 @@
       font-weight: 700;
       border: 1px solid rgba(255, 255, 255, 0.5);
     }
-
-    /* Map Card */
     .map-card {
       background: var(--card-bg);
       border-radius: 24px;
@@ -102,40 +87,16 @@
       border: 2px solid var(--border-color);
       box-shadow: var(--shadow-soft);
     }
-    .map-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
+    .map-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .map-title {
-      font-size: 1.08rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-size: 1.08rem; font-weight: 800; color: var(--primary-dark); display: flex; align-items: center; gap: 6px;
     }
-    #map {
-      width: 100%;
-      height: 380px;
-      border-radius: 18px;
-      border: 1.5px solid #ebd8d0;
-      z-index: 1;
-    }
+    #map { width: 100%; height: 380px; border-radius: 18px; border: 1.5px solid #ebd8d0; z-index: 1; }
     .map-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-      font-size: 0.8rem;
-      justify-content: center;
-      font-weight: 600;
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; font-size: 0.8rem; justify-content: center; font-weight: 600;
     }
     .legend-item { display: flex; align-items: center; gap: 5px; }
     .legend-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; border: 1.5px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
-
-    /* Summary Card */
     .summary-card {
       background: var(--pastel-yellow);
       border: 2px dashed #fbd89a;
@@ -143,17 +104,10 @@
       padding: 18px 20px;
       margin-bottom: 22px;
     }
-    .summary-card h3 {
-      font-size: 1.02rem;
-      color: #b76e00;
-      margin-bottom: 8px;
-      font-weight: 800;
-    }
+    .summary-card h3 { font-size: 1.02rem; color: #b76e00; margin-bottom: 8px; font-weight: 800; }
     .summary-card ul { list-style: none; font-size: 0.9rem; color: #5d4a2d; }
     .summary-card li { margin-bottom: 6px; position: relative; padding-left: 20px; }
     .summary-card li::before { content: "🧡"; position: absolute; left: 0; top: 1px; font-size: 0.75rem; }
-
-    /* Day Cards */
     .day-card {
       background: var(--card-bg);
       border-radius: 24px;
@@ -161,375 +115,109 @@
       margin-bottom: 24px;
       box-shadow: var(--shadow-soft);
       border: 2px solid var(--border-color);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .day-card:hover {
-      box-shadow: var(--shadow-hover);
     }
     .day-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 2px solid #fbf0ee;
-      padding-bottom: 12px;
-      margin-bottom: 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 2px solid #fbf0ee; padding-bottom: 12px; margin-bottom: 18px;
     }
     .day-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-size: 1.25rem; font-weight: 800; color: var(--primary-dark); display: flex; align-items: center; gap: 6px;
     }
     .day-theme {
-      font-size: 0.82rem;
-      color: var(--primary-dark);
-      background: var(--pastel-pink);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: 700;
-      border: 1px solid #ffd4de;
+      font-size: 0.82rem; color: var(--primary-dark); background: var(--pastel-pink); padding: 4px 12px; border-radius: 20px; font-weight: 700; border: 1px solid #ffd4de;
     }
-
     .timeline { position: relative; padding-left: 22px; }
     .timeline::before {
-      content: "";
-      position: absolute;
-      left: 7px;
-      top: 8px;
-      bottom: 12px;
-      width: 2.5px;
-      background: #ffd6dc;
-      border-radius: 2px;
+      content: ""; position: absolute; left: 7px; top: 8px; bottom: 12px; width: 2.5px; background: #ffd6dc; border-radius: 2px;
     }
     .item { position: relative; margin-bottom: 22px; }
     .item:last-child { margin-bottom: 0; }
     .item::before {
-      content: "";
-      position: absolute;
-      left: -22px;
-      top: 6px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--primary);
-      border: 3px solid white;
-      box-shadow: 0 0 0 2px #ffb3c1;
+      content: ""; position: absolute; left: -22px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--primary); border: 3px solid white; box-shadow: 0 0 0 2px #ffb3c1;
     }
-    .item-time {
-      font-size: 0.84rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 2px;
-    }
+    .item-time { font-size: 0.84rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 2px; }
     .item-title {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
+      font-size: 1.05rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
     }
-    
-    /* Naver Search Clickable Link */
     .naver-link {
-      color: #2b2b2b;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: color 0.2s, transform 0.15s;
-      border-bottom: 2px solid transparent;
+      color: #2b2b2b; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; border-bottom: 2px solid transparent;
     }
-    .naver-link:hover {
-      color: #03c75a;
-      border-bottom: 2px solid #03c75a;
-      transform: translateY(-1px);
-    }
+    .naver-link:hover { color: #03c75a; border-bottom: 2px solid #03c75a; }
     .naver-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.68rem;
-      font-weight: 800;
-      background: #03c75a;
-      color: white;
-      padding: 1px 6px;
-      border-radius: 5px;
-      margin-left: 4px;
-      letter-spacing: -0.3px;
+      font-size: 0.68rem; font-weight: 800; background: #03c75a; color: white; padding: 1px 6px; border-radius: 5px; margin-left: 4px;
     }
-
-    .tag-must {
-      font-size: 0.72rem;
-      background: #ffe3e8;
-      color: #e63956;
-      padding: 2px 8px;
-      border-radius: 8px;
-      font-weight: 700;
-    }
-    .tag-mom {
-      font-size: 0.72rem;
-      background: #e3f2fd;
-      color: #1976d2;
-      padding: 2px 8px;
-      border-radius: 8px;
-      font-weight: 700;
-    }
-    .tag-duo {
-      font-size: 0.72rem;
-      background: #fff3cd;
-      color: #856404;
-      padding: 2px 8px;
-      border-radius: 8px;
-      font-weight: 700;
-    }
+    .tag-must { font-size: 0.72rem; background: #ffe3e8; color: #e63956; padding: 2px 8px; border-radius: 8px; font-weight: 700; }
+    .tag-mom { font-size: 0.72rem; background: #e3f2fd; color: #1976d2; padding: 2px 8px; border-radius: 8px; font-weight: 700; }
+    .tag-duo { font-size: 0.72rem; background: #fff3cd; color: #856404; padding: 2px 8px; border-radius: 8px; font-weight: 700; }
     .transit-info {
-      display: inline-block;
-      margin-top: 5px;
-      font-size: 0.8rem;
-      color: #e84368;
-      font-weight: 700;
-      background: #fff0f3;
-      padding: 3px 10px;
-      border-radius: 8px;
-      border: 1px solid #ffd8e1;
+      display: inline-block; margin-top: 5px; font-size: 0.8rem; color: #e84368; font-weight: 700; background: #fff0f3; padding: 3px 10px; border-radius: 8px; border: 1px solid #ffd8e1;
     }
-    .item-desc {
-      font-size: 0.89rem;
-      color: var(--text-sub);
-      margin-top: 6px;
-      line-height: 1.55;
-    }
-
-    /* Souvenir Badge Box under Attractions */
+    .item-desc { font-size: 0.89rem; color: var(--text-sub); margin-top: 6px; line-height: 1.55; }
     .souvenir-box {
-      margin-top: 7px;
-      background: #fdf8f5;
-      border: 1px dashed #f5c2b0;
-      border-radius: 10px;
-      padding: 7px 11px;
-      font-size: 0.82rem;
-      color: #6a4a3c;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
+      margin-top: 7px; background: #fdf8f5; border: 1px dashed #f5c2b0; border-radius: 10px; padding: 7px 11px; font-size: 0.82rem; color: #6a4a3c; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
     }
     .souvenir-tag {
-      background: #ff758c;
-      color: white;
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding: 2px 7px;
-      border-radius: 6px;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
+      background: #ff758c; color: white; font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 6px;
     }
-    .souvenir-text {
-      font-weight: 600;
-      color: #4a3429;
-    }
-
-    /* Food & Review Box */
+    .souvenir-text { font-weight: 600; color: #4a3429; }
     .food-box {
-      margin-top: 10px;
-      background: #fffcf9;
-      border: 1.5px solid #ffe3db;
-      border-left: 4px solid #ff7f66;
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-size: 0.86rem;
-      box-shadow: 0 2px 8px rgba(255, 127, 102, 0.05);
+      margin-top: 10px; background: #fffcf9; border: 1.5px solid #ffe3db; border-left: 4px solid #ff7f66; padding: 12px 14px; border-radius: 12px; font-size: 0.86rem; box-shadow: 0 2px 8px rgba(255, 127, 102, 0.05);
     }
     .food-box strong { color: #2d3436; font-weight: 700; }
     .food-box .highlight { color: #e64a19; font-weight: 800; }
-    .food-sublink {
-      display: inline-block;
-      margin-right: 8px;
-      margin-top: 3px;
-      color: #444;
-      text-decoration: none;
-      font-weight: 600;
-    }
+    .food-sublink { display: inline-block; margin-right: 8px; margin-top: 3px; color: #444; text-decoration: none; font-weight: 600; }
     .food-sublink:hover { color: #03c75a; text-decoration: underline; }
-
-    /* Budget Table Section */
     .budget-card {
-      background: var(--card-bg);
-      border-radius: 24px;
-      padding: 22px 20px;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow-soft);
-      border: 2px solid var(--border-color);
+      background: var(--card-bg); border-radius: 24px; padding: 22px 20px; margin-bottom: 24px; box-shadow: var(--shadow-soft); border: 2px solid var(--border-color);
     }
     .budget-card h3 {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-size: 1.15rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
     }
-    .budget-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.87rem;
-      text-align: left;
-    }
-    .budget-table th, .budget-table td {
-      padding: 11px 9px;
-      border-bottom: 1px solid #f4eae7;
-    }
-    .budget-table th {
-      background: var(--pastel-pink);
-      color: var(--primary-dark);
-      font-weight: 700;
-    }
+    .budget-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; text-align: left; }
+    .budget-table th, .budget-table td { padding: 11px 9px; border-bottom: 1px solid #f4eae7; }
+    .budget-table th { background: var(--pastel-pink); color: var(--primary-dark); font-weight: 700; }
     .budget-table .total-row td {
-      font-weight: 800;
-      color: #e64a19;
-      font-size: 0.98rem;
-      background: #fff8f5;
-      border-top: 2px solid #ffccd5;
+      font-weight: 800; color: #e64a19; font-size: 0.98rem; background: #fff8f5; border-top: 2px solid #ffccd5;
     }
-    .budget-note {
-      font-size: 0.8rem;
-      color: #888;
-      margin-top: 10px;
-      line-height: 1.45;
-    }
-
-    /* Comment Section */
+    .budget-note { font-size: 0.8rem; color: #888; margin-top: 10px; line-height: 1.45; }
     .comment-card {
-      background: var(--card-bg);
-      border-radius: 24px;
-      padding: 22px 20px;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow-soft);
-      border: 2px solid var(--border-color);
+      background: var(--card-bg); border-radius: 24px; padding: 22px 20px; margin-bottom: 24px; box-shadow: var(--shadow-soft); border: 2px solid var(--border-color);
     }
     .comment-card h3 {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-size: 1.15rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
     }
-    .comment-intro {
-      font-size: 0.85rem;
-      color: var(--text-sub);
-      margin-bottom: 16px;
-    }
-    .comment-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
+    .comment-intro { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 16px; }
+    .comment-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
     .comment-inputs { display: flex; gap: 10px; }
     .comment-inputs select, .comment-inputs input {
-      padding: 10px 14px;
-      border: 1.5px solid #eddcd8;
-      border-radius: 12px;
-      font-size: 0.88rem;
-      outline: none;
-      background: #fff;
+      padding: 10px 14px; border: 1.5px solid #eddcd8; border-radius: 12px; font-size: 0.88rem; outline: none; background: #fff;
     }
     .comment-inputs select { min-width: 115px; font-weight: 700; color: #444; }
     .comment-inputs input { flex: 1; }
     .comment-form textarea {
-      width: 100%;
-      height: 75px;
-      padding: 10px 14px;
-      border: 1.5px solid #eddcd8;
-      border-radius: 12px;
-      font-size: 0.88rem;
-      outline: none;
-      resize: none;
-      font-family: inherit;
+      width: 100%; height: 75px; padding: 10px 14px; border: 1.5px solid #eddcd8; border-radius: 12px; font-size: 0.88rem; outline: none; resize: none; font-family: inherit;
     }
-    .comment-form textarea:focus, .comment-inputs input:focus, .comment-inputs select:focus {
-      border-color: var(--primary);
-    }
+    .btn-row { display: flex; justify-content: flex-end; gap: 8px; }
     .comment-submit-btn {
-      align-self: flex-end;
-      background: linear-gradient(135deg, #ff758c 0%, #ff5277 100%);
-      color: white;
-      border: none;
-      padding: 10px 22px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.88rem;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 4px 12px rgba(255, 107, 139, 0.25);
+      background: linear-gradient(135deg, #ff758c 0%, #ff5277 100%); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: 0.88rem; cursor: pointer;
     }
-    .comment-submit-btn:hover { opacity: 0.92; transform: translateY(-1px); }
-    .comment-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 10px;
+    .share-kakao-btn {
+      background: #fee500; color: #191919; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
     }
+    .comment-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
     .comment-item {
-      background: #faf6f4;
-      border-radius: 14px;
-      padding: 13px 15px;
-      border: 1px solid #f1e4e0;
-      position: relative;
+      background: #faf6f4; border-radius: 14px; padding: 13px 15px; border: 1px solid #f1e4e0;
     }
-    .comment-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 5px;
-    }
-    .comment-author {
-      font-weight: 800;
-      font-size: 0.88rem;
-      color: var(--primary-dark);
-    }
+    .comment-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+    .comment-author { font-weight: 800; font-size: 0.88rem; color: var(--primary-dark); }
     .comment-date { font-size: 0.75rem; color: #999; }
-    .comment-body {
-      font-size: 0.87rem;
-      color: #3d3d3d;
-      word-break: break-all;
-      white-space: pre-wrap;
-    }
+    .comment-body { font-size: 0.87rem; color: #3d3d3d; word-break: break-all; white-space: pre-wrap; }
     .comment-target {
-      display: inline-block;
-      font-size: 0.73rem;
-      background: #ffe6ec;
-      color: #e84368;
-      padding: 2px 7px;
-      border-radius: 6px;
-      font-weight: 700;
-      margin-bottom: 4px;
+      display: inline-block; font-size: 0.73rem; background: #ffe6ec; color: #e84368; padding: 2px 7px; border-radius: 6px; font-weight: 700; margin-bottom: 4px;
     }
-    .delete-btn {
-      background: none;
-      border: none;
-      color: #bbb;
-      font-size: 0.75rem;
-      cursor: pointer;
-      margin-left: 8px;
-    }
+    .delete-btn { background: none; border: none; color: #bbb; font-size: 0.75rem; cursor: pointer; margin-left: 8px; }
     .delete-btn:hover { color: #e84368; }
-
-    footer {
-      text-align: center;
-      font-size: 0.84rem;
-      color: #aaa;
-      margin-top: 32px;
-      font-weight: 500;
-    }
+    footer { text-align: center; font-size: 0.84rem; color: #aaa; margin-top: 32px; font-weight: 500; }
   </style>
 </head>
 <body>
@@ -544,7 +232,6 @@
       </div>
     </header>
 
-    <!-- 인터랙티브 지도 -->
     <div class="map-card">
       <div class="map-header">
         <div class="map-title">📍 여행 코스 한눈에 보기 (지도)</div>
@@ -560,13 +247,12 @@
     </div>
 
     <div class="summary-card">
-      <h3>💡 편안한 여행 포인트</h3>
+      <h3>💡 완벽 검토 완료! 일정 핵심 포인트</h3>
       <ul>
-        <li><strong>관광지별 한 줄 기념품 안내:</strong> 각 장소 아래 <span class="souvenir-tag">🎁 추천 기념품</span> 한 줄 메모를 보고 알짜배기 특산품을 놓치지 마세요!</li>
-        <li><strong>1일차 모닝 보너스 (혜린 & 엄마 데이트):</strong> 8시 렌터카 인수 후 고기국수/전복죽 아침 식사와 한적한 무지개해안도로 & 오션뷰 카페 나들이!</li>
-        <li><strong>모두를 위한 맞춤 평지 동선:</strong> 14시 할머니 & 이모 합류 후에도 계단과 가파른 오르막 없이 넓은 잔디밭 정원과 편안한 뷰 위주로 구성했어요.</li>
-        <li><strong>엄마 맞춤 2일차 동선:</strong> 신선하고 활기찬 아침 시장 구경 후 점심에 싱싱한 모둠회 & 매운탕을 즐깁니다!</li>
-        <li><strong>노을 핑크뮬리 & 밤 온천 힐링:</strong> 2일차 오후엔 오설록과 노을빛 마노르블랑을 둘러보고, 저녁 식사 후 밤 노천탕에서 피로를 녹입니다. ♨️</li>
+        <li><strong>스크립트 오류 완벽 수정:</strong> 지도 정상 작동 및 [카톡으로 공유하기] 버튼 클릭 시 가족 단톡방에 보낼 내용이 복사됩니다.</li>
+        <li><strong>3일차 저녁 메뉴 수정:</strong> 코코컬처클럽 흑돼지구이 세트(68,000원) 및 흑돼지 김치찌개 다이닝 반영 (저녁 22시까지 여유 운영).</li>
+        <li><strong>식당 검증 완료:</strong> 2일차 저녁 산방산 앞 '순천미향' 및 안덕 '춘미향식당', 4일차 점심 한림 '바당길' 수요일 정상영업 확인!</li>
+        <li><strong>여유로운 시간대:</strong> 2일차 올레시장 12시 점심 식사, 마노르블랑 16:00~17:40(노을 핑크뮬리 골든타임) 배분 완료.</li>
       </ul>
     </div>
 
@@ -577,84 +263,86 @@
         <span class="day-theme">모닝 데이트 & 서부 동물원 나들이</span>
       </div>
       <div class="timeline">
-        <!-- 혜린 & 엄마 모닝 보너스 코스 -->
         <div class="item">
           <div class="item-time">07:30 ~ 08:30</div>
           <div class="item-title">
             <a href="https://search.naver.com/search.naver?query=제주국제공항" target="_blank" class="naver-link">
               제주공항 도착 & 렌터카 인수 <span class="naver-badge">N검색</span>
             </a>
-            <span class="tag-duo">혜린 & 엄마 모닝 코스</span>
-          </div>
-          <div class="transit-info">🚗 아침 식당까지 차량 약 8~10분 소요</div>
-          <div class="item-desc">7시 30분 도착 후 짐을 찾고 8시 렌터카 인수 완료! 엄마와 둘만의 모닝 데이트 출발!</div>
-        </div>
-
-        <div class="item">
-          <div class="item-time">08:30 ~ 09:40</div>
-          <div class="item-title">
-            아침 식사: 공항 근처 고기국수 or 따끈한 전복죽
             <span class="tag-duo">혜린 & 엄마</span>
           </div>
-          <div class="transit-info">🚗 무지개해안도로까지 차량 약 8분 소요</div>
-          <div class="food-box">
-            <div>
-              추천 맛집 (엄마 맞춤 부드럽고 진한 아침):<br>
-              <a href="https://search.naver.com/search.naver?query=제주+올래국수" target="_blank" class="food-sublink">📍 <strong>올래국수 (08:30 오픈)</strong> <span class="naver-badge">N</span></a> : 진하고 담백한 사골 고기국수<br>
-              <a href="https://search.naver.com/search.naver?query=제주+순옥이네명가+도두점" target="_blank" class="food-sublink">📍 <strong>순옥이네명가 도두점 (09:00 오픈)</strong> <span class="naver-badge">N</span></a> : 내장 가득 진한 전복죽 & 해물뚝배기<br>
-              <a href="https://search.naver.com/search.naver?query=제주+자매국수" target="_blank" class="food-sublink">📍 <strong>자매국수 (09:00 오픈)</strong> <span class="naver-badge">N</span></a> : 깔끔한 돔베고기 고기국수 & 비빔국수
-            </div>
-            <div style="margin-top:6px;"><strong>후기 & 특징:</strong> 해장국 대신 속 편안한 고기국수나 고소한 전복죽으로 아침을 든든하게 채웁니다. 아침 일찍 가면 웨이팅 없이 여유롭게 식사 가능합니다.</div>
-          </div>
+          <div class="transit-info">🚗 용담 해안도로로 이동 (차량 약 8분)</div>
+          <div class="item-desc">7시 30분 도착 후 짐 찾고 8시 렌터카 인수 완료! 9시 식당 오픈 전까지 해안도로 드라이브를 즐깁니다.</div>
         </div>
 
         <div class="item">
-          <div class="item-time">09:40 ~ 11:30</div>
+          <div class="item-time">08:30 ~ 09:00</div>
           <div class="item-title">
             <a href="https://search.naver.com/search.naver?query=도두동무지개해안도로" target="_blank" class="naver-link">
-              무지개해안도로 & 도두봉 산책 & 이호테우 말등대 <span class="naver-badge">N검색</span>
+              무지개해안도로 모닝 산책 & 포토타임 <span class="naver-badge">N검색</span>
             </a>
-            <span class="tag-duo">인생샷 타임</span>
+            <span class="tag-duo">혜린 & 엄마</span>
           </div>
-          <div class="transit-info">🚗 용담 오션뷰 카페까지 차량 약 10분 소요</div>
-          <div class="item-desc">
-            오전 9~10시대는 관광객이 적어 한적하게 사진 찍기 가장 좋은 골든타임! 알록달록 무지개 도로에서 엄마 독사진과 모녀 투샷을 찍고, 완만한 도두봉 키세스존과 이호테우 빨간/하얀 말등대에서 예쁜 사진을 맘껏 남깁니다.
+          <div class="transit-info">🚗 아침 식당까지 차량 약 5분 소요</div>
+          <div class="item-desc">아침 일찍 관광객이 없을 때 알록달록 무지개 블록에서 엄마 독사진과 모녀 커플 사진을 한적하게 남깁니다.</div>
+        </div>
+
+        <div class="item">
+          <div class="item-time">09:00 ~ 10:10</div>
+          <div class="item-title">
+            아침 식사: 자매국수 고기국수 or 순옥이네명가 전복죽 (09:00 오픈)
+            <span class="tag-duo">일요일 정상영업</span>
           </div>
-          <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">이호테우 등대 소품샵의 아기자기한 말등대 마그넷 & 키링 소품</span>
+          <div class="transit-info">🚗 이호테우 말등대로 이동 (차량 약 8분)</div>
+          <div class="food-box">
+            <div>
+              추천 맛집 (올래국수 일요휴무 대체 완비):<br>
+              <a href="https://search.naver.com/search.naver?query=제주+자매국수" target="_blank" class="food-sublink">📍 <strong>자매국수 (09:00 오픈, 수 휴무)</strong> <span class="naver-badge">N</span></a> : 진하고 깔끔한 사골 고기국수<br>
+              <a href="https://search.naver.com/search.naver?query=제주+순옥이네명가+본점" target="_blank" class="food-sublink">📍 <strong>순옥이네명가 제주본점 (도두동) (09:00 오픈)</strong> <span class="naver-badge">N</span></a> : 내장 가득 진한 전복죽 & 해물뚝배기
+            </div>
+            <div style="margin-top:6px;"><strong>특징:</strong> 일요일 정상영업하며, 오픈 시간대에 들어가 대기 없이 속 편안하고 따뜻하게 첫 식사를 즐깁니다.</div>
           </div>
         </div>
 
         <div class="item">
-          <div class="item-time">11:30 ~ 13:20</div>
+          <div class="item-time">10:10 ~ 10:45</div>
           <div class="item-title">
-            용담 해안도로 통유리 오션뷰 카페 휴식
-            <span class="tag-duo">티타임 & 뷰 힐링</span>
+            <a href="https://search.naver.com/search.naver?query=이호테우말등대" target="_blank" class="naver-link">
+              이호테우 빨간·하얀 말등대 포토타임 <span class="naver-badge">N검색</span>
+            </a>
+            <span class="tag-duo">인생샷 코스</span>
           </div>
-          <div class="transit-info">🚗 제주공항 1층 도착층까지 차량 약 10분 소요</div>
-          <div class="food-box">
-            <div>
-              추천 카페 (공항 바로 옆 오션뷰):<br>
-              <a href="https://search.naver.com/search.naver?query=앙뚜아네트+용담점" target="_blank" class="food-sublink">📍 <strong>앙뚜아네트 용담점</strong> <span class="naver-badge">N</span></a> : 바다 바로 앞, 편안한 좌식 평상이 있어 쉬기 좋음<br>
-              <a href="https://search.naver.com/search.naver?query=바이러닉에스프레소바+제주점" target="_blank" class="food-sublink">📍 <strong>바이러닉 에스프레소 바</strong> <span class="naver-badge">N</span></a> : 비행기 이착륙과 파도가 한눈에 보이는 감성 뷰
-            </div>
-          </div>
+          <div class="transit-info">🚗 테우해안로/용담 오션뷰 카페까지 차량 약 5~10분 소요</div>
+          <div class="item-desc">30~35분간 파란 바다 위 빨간말, 하얀말 등대를 배경으로 귀여운 원근감 사진을 남기고 카페로 이동합니다.</div>
           <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">앙뚜아네트 현무암 모양 빵 & 수제 제주 버터 쿠키 세트</span>
+            <span class="souvenir-tag">🎁 소품</span>
+            <span class="souvenir-text">등대 인근 소품점의 말등대 마그넷 & 감귤 키링</span>
           </div>
         </div>
 
-        <!-- 4인 가족 완전체 합류 -->
+        <div class="item">
+          <div class="item-time">10:45 ~ 13:20</div>
+          <div class="item-title">
+            통유리 오션뷰 카페 여유로운 티타임 휴식
+            <span class="tag-duo">티타임 & 뷰 힐링</span>
+          </div>
+          <div class="transit-info">🚗 제주공항 1층 도착장으로 이동 (차량 약 10분)</div>
+          <div class="food-box">
+            <div>
+              <a href="https://search.naver.com/search.naver?query=앙뚜아네트+용담점" target="_blank" class="food-sublink">📍 <strong>앙뚜아네트 용담점</strong> <span class="naver-badge">N</span></a> : 바다 앞 편안한 좌식 평상<br>
+              <a href="https://search.naver.com/search.naver?query=바이러닉에스프레소바+제주점" target="_blank" class="food-sublink">📍 <strong>바이러닉 에스프레소 바 (테우해안로 96)</strong> <span class="naver-badge">N</span></a> : 이호테우 해변 바로 앞 오션뷰 대형 카페
+            </div>
+          </div>
+        </div>
+
         <div class="item">
           <div class="item-time">13:30 ~ 14:15</div>
           <div class="item-title">
             제주공항 마중: 이모 & 할머니 픽업! 🚗
-            <span class="tag-must">4인 가족 완전체 합류</span>
+            <span class="tag-must">4인 완전체 합류</span>
           </div>
           <div class="transit-info">🚗 화조원까지 차량 약 30분 소요</div>
-          <div class="item-desc">공항 1층 도착장에서 14시 도착 비행기로 오시는 할머니와 이모님을 반갑게 픽업하여 서부 애월 방면으로 여유롭게 출발합니다!</div>
+          <div class="item-desc">공항 1층에서 14시 비행기로 오시는 할머니와 이모님을 반갑게 픽업하여 서부 애월로 이동합니다.</div>
         </div>
 
         <div class="item">
@@ -667,11 +355,7 @@
           </div>
           <div class="transit-info">🚗 중문 식당까지 차량 약 35분 소요</div>
           <div class="item-desc">
-            넓고 완만한 잔디밭에서 순한 알파카와 교감하고, 형형색색 앵무새 먹이주기 체험을 즐길 수 있는 감성 동물원입니다. 걷기 편안하여 온 가족이 함께 사진 찍기에 좋습니다.
-          </div>
-          <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">보들보들한 화조원 알파카 털 인형 & 귀여운 올빼미 키링 굿즈</span>
+            (연중무휴, 입장마감 17:00) 완만한 평지 잔디밭에서 순한 알파카와 교감하고 새 먹이주기 체험을 즐기며 4인 가족사진을 찍습니다.
           </div>
         </div>
 
@@ -683,16 +367,10 @@
           <div class="transit-info">🚗 서귀포호텔까지 차량 약 15분 소요</div>
           <div class="food-box">
             <div>
-              추천 맛집: 
-              <a href="https://search.naver.com/search.naver?query=중문+가람돌솥밥" target="_blank" class="food-sublink">📍 <strong>가람돌솥밥</strong> <span class="naver-badge">N</span></a> | 
-              <a href="https://search.naver.com/search.naver?query=제주오성+갈치음식점" target="_blank" class="food-sublink">📍 <strong>제주오성</strong> <span class="naver-badge">N</span></a>
+              <a href="https://search.naver.com/search.naver?query=중문+가람돌솥밥" target="_blank" class="food-sublink">📍 <strong>가람돌솥밥 (연중무휴)</strong> <span class="naver-badge">N</span></a> | 
+              <a href="https://search.naver.com/search.naver?query=제주오성+갈치음식점" target="_blank" class="food-sublink">📍 <strong>제주오성 (연중무휴)</strong> <span class="naver-badge">N</span></a>
             </div>
-            <div style="margin-top:6px;"><strong>메뉴:</strong> 통갈치구이, 갈치조림, 전복돌솥밥 세트</div>
-            <div><strong>인기 & 후기:</strong> 가시를 먹기 좋게 깔끔하게 발라주는 <span class="highlight">통갈치구이</span>와 담백한 <span class="highlight">전복돌솥밥</span>이 인기 1위! 자극적이지 않은 정갈한 밑반찬과 따끈한 숭늉으로 첫날 비행 피로를 풀기 좋습니다.</div>
-          </div>
-          <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">제주오성 1층 소품샵(소랑아시)의 감귤 모자, 핸드메이드 동백꽃 파우치</span>
+            <div style="margin-top:6px;"><strong>메뉴:</strong> 가시를 발라주는 통갈치구이, 갈치조림, 담백한 전복돌솥밥</div>
           </div>
         </div>
 
@@ -716,51 +394,48 @@
       </div>
       <div class="timeline">
         <div class="item">
-          <div class="item-time">09:00 ~ 09:25</div>
+          <div class="item-time">09:00 ~ 09:30</div>
           <div class="item-title">호텔 조식 후 서귀포매일올레시장 이동</div>
-          <div class="transit-info">🚗 올레시장까지 차량 약 25분 소요</div>
+          <div class="transit-info">🚗 올레시장까지 차량 약 25~30분 소요</div>
         </div>
 
         <div class="item">
-          <div class="item-time">09:25 ~ 11:45</div>
+          <div class="item-time">09:30 ~ 12:00</div>
           <div class="item-title">
             <a href="https://search.naver.com/search.naver?query=서귀포매일올레시장" target="_blank" class="naver-link">
-              서귀포매일올레시장 아침 장보기 & 구경 <span class="naver-badge">N검색</span>
+              서귀포매일올레시장 아침 장보기 & 여유로운 구경 <span class="naver-badge">N검색</span>
             </a>
           </div>
           <div class="item-desc">
-            엄마 말씀대로 아침 시장은 과일, 특산품, 생선이 가장 신선하게 진열되는 시간대입니다! 북적이지 않고 쾌적하게 시장 골목을 둘러보며 싱싱한 제주 감귤, 할머니떡집 감귤모찌, 메밀꽃강정치킨 등 간식거리를 여유롭게 구경하고 구매합니다.
+            신선한 과일과 특산품이 진열되는 아침에 여유롭게 둘러봅니다. (※ 할머니 보행 피로를 줄일 수 있도록 중앙 통로 쉼터 벤치에서 중간중간 쉬어가기 좋습니다.)
           </div>
           <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">10월 제철 극조생 노지감귤·황금향(택배 발송), 할머니떡집 감귤찹쌀떡, 개별포장 냉동 오메기떡</span>
+            <span class="souvenir-tag">🎁 특산품</span>
+            <span class="souvenir-text">10월 제철 극조생 감귤·황금향(택배 발송), 할머니떡집 감귤모찌, 개별포장 오메기떡</span>
           </div>
         </div>
 
         <div class="item">
-          <div class="item-time">11:45 ~ 13:10</div>
+          <div class="item-time">12:00 ~ 13:20</div>
           <div class="item-title">
             점심 식사: 올레시장 싱싱한 모둠회 & 매운탕 한상
           </div>
           <div class="transit-info">🚗 오설록까지 차량 약 35분 소요</div>
           <div class="food-box">
             <div>
-              추천 맛집: 
               <a href="https://search.naver.com/search.naver?query=서귀포올레시장+우정회센타" target="_blank" class="food-sublink">📍 <strong>우정회센타 2호점</strong> <span class="naver-badge">N</span></a> | 
-              <a href="https://search.naver.com/search.naver?query=서귀포올레시장+기흥어물" target="_blank" class="food-sublink">📍 <strong>기흥어물</strong> <span class="naver-badge">N</span></a> | 
-              <a href="https://search.naver.com/search.naver?query=서귀포올레시장+달인회센타" target="_blank" class="food-sublink">📍 <strong>달인회센타</strong> <span class="naver-badge">N</span></a>
+              <a href="https://search.naver.com/search.naver?query=서귀포올레시장+기흥어물" target="_blank" class="food-sublink">📍 <strong>기흥어물</strong> <span class="naver-badge">N</span></a>
             </div>
-            <div style="margin-top:6px;"><strong>메뉴:</strong> 고등어회, 갈치회, 참돔, 광어 모둠회, 딱새우회, 활어 매운탕</div>
-            <div><strong>인기 & 후기:</strong> 시장 내 깔끔한 상차림 식당에서 갓 잡은 싱싱한 <span class="highlight">모둠회</span>를 즐기고, 칼칼하고 개운한 <span class="highlight">매운탕 국물</span>로 점심을 든든하게 마무리합니다. 점심에 회를 먹으면 소화도 잘되고 하루 컨디션이 아주 가볍습니다!</div>
+            <div style="margin-top:6px;"><strong>메뉴:</strong> 고등어회, 갈치회, 참돔 모둠회와 개운한 활어 매운탕 (12시경 든든하게 점심 식사)</div>
           </div>
           <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">야식용 순살 메밀꽃강정치킨 포장 & 바삭한 제주 메밀 초코크런치 과자</span>
+            <span class="souvenir-tag">🎁 간식</span>
+            <span class="souvenir-text">야식용 순살 메밀꽃강정치킨 포장</span>
           </div>
         </div>
 
         <div class="item">
-          <div class="item-time">13:45 ~ 15:45</div>
+          <div class="item-time">14:00 ~ 15:40</div>
           <div class="item-title">
             <a href="https://search.naver.com/search.naver?query=오설록티뮤지엄" target="_blank" class="naver-link">
               오설록 티 뮤지엄 & 이니스프리 제주하우스 <span class="naver-badge">N검색</span>
@@ -768,47 +443,41 @@
           </div>
           <div class="transit-info">🚗 마노르블랑까지 차량 약 15분 소요</div>
           <div class="item-desc">
-            점심 식사 후 푸른 녹차밭 평지 산책로를 걸으며 소화시키고, 시원한 녹차 소프트아이스크림과 오설록 롤케이크를 맛보며 여유로운 티타임을 가집니다.
+            (연중무휴) 휠체어/도보 완만한 평지 녹차밭을 산책하며 시원한 녹차 아이스크림을 즐기고 실내 라운지에서 넉넉하게 휴식합니다.
           </div>
           <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">오설록 시그니처 티(달빛걷기·삼다연 영귤차 티세트), 녹차 밀크 스프레드 잼, 이니스프리 천연 감귤비누 & 핸드크림</span>
+            <span class="souvenir-tag">🎁 추천 티</span>
+            <span class="souvenir-text">오설록 시그니처 티 세트 (삼다연 영귤차, 달빛걷기), 녹차 밀크 스프레드</span>
           </div>
         </div>
 
         <div class="item">
-          <div class="item-time">16:00 ~ 17:30</div>
+          <div class="item-time">16:00 ~ 17:40</div>
           <div class="item-title">
             <a href="https://search.naver.com/search.naver?query=제주+마노르블랑" target="_blank" class="naver-link">
               마노르블랑 (핑크뮬리 & 팜파스 노을빛 산책) <span class="naver-badge">N검색</span>
             </a>
             <span class="tag-must">꼭 가고 싶은 곳</span>
           </div>
-          <div class="transit-info">🚗 사계리/안덕 저녁 식당까지 차량 약 10분 소요</div>
+          <div class="transit-info">🚗 사계리/산방산 저녁 식당까지 차량 약 10분 소요</div>
           <div class="item-desc">
-            오후 4~5시대의 마노르블랑은 부드러운 햇살과 노을빛이 더해져 핑크뮬리가 하루 중 가장 몽환적이고 예쁘게 빛나는 골든타임입니다! 산방산을 배경으로 인생 가족사진을 찍기에 최고입니다.
-          </div>
-          <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">마노르블랑 핑크뮬리 감성 엽서 & 마그넷, 유럽풍 앤틱 홍차 티백 틴케이스</span>
+            (연중무휴, 주문마감 18:00) 17시 40분 일몰 즈음까지 산방산을 배경으로 부드러운 핑크빛 노을이 쏟아지는 야외 정원에서 인생 가족사진을 찍습니다.
           </div>
         </div>
 
         <div class="item">
-          <div class="item-time">17:40 ~ 18:50</div>
+          <div class="item-time">17:50 ~ 19:00</div>
           <div class="item-title">
-            저녁 식사: 사계리·안덕 따뜻한 한식
+            저녁 식사: 산방산 한식 (순천미향 or 춘미향식당)
           </div>
           <div class="transit-info">🚗 산방산 탄산온천까지 차량 약 5분 소요</div>
           <div class="food-box">
             <div>
-              추천 맛집: 
-              <a href="https://search.naver.com/search.naver?query=사계리+사계바다" target="_blank" class="food-sublink">📍 <strong>사계바다</strong> <span class="naver-badge">N</span></a> | 
-              <a href="https://search.naver.com/search.naver?query=사계리+미도식당" target="_blank" class="food-sublink">📍 <strong>미도식당</strong> <span class="naver-badge">N</span></a> | 
-              <a href="https://search.naver.com/search.naver?query=안덕+순옥이네명가" target="_blank" class="food-sublink">📍 <strong>순옥이네명가</strong> <span class="naver-badge">N</span></a>
+              추천 맛집 (온천 5분 거리 검증된 산방산 한식당):<br>
+              <a href="https://search.naver.com/search.naver?query=순천미향+제주산방산본점" target="_blank" class="food-sublink">📍 <strong>순천미향 제주산방산본점 (목 휴무, 10:00~20:00)</strong> <span class="naver-badge">N</span></a> : 성게미역국, 전복해물뚝배기, 순살갈치조림 (사계남로216번길 24-73)<br>
+              <a href="https://search.naver.com/search.naver?query=안덕+춘미향식당" target="_blank" class="food-sublink">📍 <strong>춘미향식당 (안덕 사계리)</strong> <span class="naver-badge">N</span></a> : 춘미향정식, 흑돼지두루치기, 갈치조림
             </div>
-            <div style="margin-top:6px;"><strong>메뉴:</strong> 성게미역국, 전복뚝배기, 옥돔구이 정식, 고등어구이</div>
-            <div><strong>인기 & 후기:</strong> 온천 입욕 전, 속을 편안하고 따뜻하게 달래주는 <span class="highlight">성게미역국</span>과 <span class="highlight">전복뚝배기</span>로 부담 없는 저녁 식사를 합니다.</div>
+            <div style="margin-top:6px;"><strong>메뉴:</strong> 온천 입욕 전, 속을 편안하고 따뜻하게 달래주는 부드러운 성게미역국과 개운한 전복뚝배기</div>
           </div>
         </div>
 
@@ -816,24 +485,20 @@
           <div class="item-time">19:00 ~ 20:30</div>
           <div class="item-title">
             <a href="https://search.naver.com/search.naver?query=산방산탄산온천" target="_blank" class="naver-link">
-              제주 산방산 탄산온천 (낭만적인 밤 노천탕 힐링 ♨️) <span class="naver-badge">N검색</span>
+              제주 산방산 탄산온천 (밤 노천탕 힐링 ♨️) <span class="naver-badge">N검색</span>
             </a>
             <span class="tag-must">꼭 가고 싶은 곳</span>
           </div>
           <div class="transit-info">🚗 서귀포호텔까지 차량 약 15~20분 소요</div>
           <div class="item-desc">
-            저녁을 가볍게 먹고 여유롭게 입장합니다. 은은한 야간 조명이 켜진 야외 노천탕과 뽀글뽀글 기포가 올라오는 실내 탄산탕에서 하루 동안 쌓인 여독을 완벽하게 녹여냅니다.
-          </div>
-          <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">탄산온천수 천연 미네랄 마스크팩 & 산방산 탄산 보습 미스트</span>
+            (노천탕 운영 22:00까지) 은은한 야간 조명이 켜진 야외 노천탕과 실내 탄산탕에서 피로를 말끔히 녹여냅니다. (노천탕 수영복 지참 또는 대여 가능)
           </div>
         </div>
 
         <div class="item">
           <div class="item-time">20:30 ~ 20:50</div>
           <div class="item-title">서귀포호텔 복귀 & 꿀잠 타임</div>
-          <div class="item-desc">개운하게 목욕을 마치고 20분 만에 호텔로 쏙 들어와, 아침에 시장에서 사둔 메밀닭강정과 감귤모찌를 간식으로 나누어 먹으며 꿀잠에 듭니다.</div>
+          <div class="item-desc">목욕을 마치고 20분 만에 호텔로 복귀하여 편안하게 하루를 마무리합니다.</div>
         </div>
       </div>
     </div>
@@ -846,97 +511,82 @@
       </div>
       <div class="timeline">
         <div class="item">
-          <div class="item-time">09:00 ~ 10:00</div>
+          <div class="item-time">09:00 ~ 10:15</div>
           <div class="item-title">호텔 조식 후 신풍바다목장 이동</div>
-          <div class="transit-info">🚗 신풍바다목장까지 차량 약 55분 소요 (해안 드라이브)</div>
+          <div class="transit-info">🚗 신풍바다목장까지 차량 약 1시간 15분 소요 (해안 드라이브)</div>
+          <div class="item-desc">남원 해안도로를 따라 여유롭게 드라이브하며 동부로 이동합니다.</div>
         </div>
 
         <div class="item">
-          <div class="item-time">10:00 ~ 11:20</div>
+          <div class="item-time">10:15 ~ 11:20</div>
           <div class="item-title">
             <a href="https://search.naver.com/search.naver?query=신풍신천바다목장" target="_blank" class="naver-link">
-              신풍 신천 바다목장 <span class="naver-badge">N검색</span>
+              신풍 신천 바다목장 둘레길 <span class="naver-badge">N검색</span>
             </a>
             <span class="tag-mom">엄마 희망 코스</span>
           </div>
           <div class="transit-info">🚗 송당리로 차량 약 35분 소요</div>
           <div class="item-desc">
-            푸른 바다와 드넓은 초원이 맞닿은 이색적인 명소입니다. 경사가 전혀 없는 평지 둘레길이라 바닷바람을 쐬며 시원하고 탁 트인 사진을 남기기 좋습니다.
-          </div>
-          <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">신풍 해안 올레길 파우치 & 제주 해안 감성 일러스트 엽서</span>
+            (상시 개방, 무료) 경사 없는 평지 해안 둘레길에서 푸른 바다와 초원을 감상합니다. (※ 주차는 올레길 입구 갓길 활용)
           </div>
         </div>
 
         <div class="item">
           <div class="item-time">12:00 ~ 13:15</div>
           <div class="item-title">
-            점심 식사: 송당리 로컬 한식
+            점심 식사: 송당리 으뜨미 (우럭정식)
           </div>
+          <div class="transit-info">🚗 제주동화마을까지 차량 약 5분 소요</div>
           <div class="food-box">
             <div>
-              추천 맛집: 
-              <a href="https://search.naver.com/search.naver?query=송당리+으뜨미" target="_blank" class="food-sublink">📍 <strong>으뜨미</strong> <span class="naver-badge">N</span></a> | 
-              <a href="https://search.naver.com/search.naver?query=송당리+송당의아침" target="_blank" class="food-sublink">📍 <strong>송당의아침</strong> <span class="naver-badge">N</span></a>
+              <a href="https://search.naver.com/search.naver?query=송당리+으뜨미" target="_blank" class="food-sublink">📍 <strong>으뜨미 (구좌읍 송당리, 목 휴무, 09:30~15:00)</strong> <span class="naver-badge">N</span></a>
             </div>
-            <div style="margin-top:6px;"><strong>메뉴:</strong> 우럭튀김정식, 보말죽, 보말칼국수, 제주 가정식 한상</div>
-            <div><strong>인기 & 후기:</strong> 겉바속촉 바삭하게 튀겨 달콤짭짤한 양파 양념을 얹은 <span class="highlight">우럭정식</span>과 부드럽고 진한 <span class="highlight">보말죽</span>이 유명합니다. 저녁 흑돼지를 위해 점심은 속 편한 메뉴로 제격입니다.</div>
+            <div style="margin-top:6px;"><strong>메뉴:</strong> 겉바속촉 바삭한 우럭튀김정식(2인 이상)과 깔끔한 밑반찬 (※ 예약·전화주문 불가, 재료 소진 시 조기 마감되므로 11:55경 도착 권장)</div>
           </div>
         </div>
 
         <div class="item">
-          <div class="item-time">13:15 ~ 15:30</div>
+          <div class="item-time">13:20 ~ 15:10</div>
           <div class="item-title">
             <a href="https://search.naver.com/search.naver?query=송당+동화마을" target="_blank" class="naver-link">
-              제주동화마을 <span class="naver-badge">N검색</span>
-            </a> & 
-            <a href="https://search.naver.com/search.naver?query=우정원베이커리+제주삼나무점" target="_blank" class="naver-link">
-              우정원베이커리 <span class="naver-badge">N검색</span>
+              제주동화마을 테마정원 산책 & 베이커리 카페 <span class="naver-badge">N검색</span>
             </a>
           </div>
           <div class="transit-info">🚗 코코컬처클럽까지 차량 약 35분 소요</div>
           <div class="item-desc">
-            계단 없이 완만하게 조성된 대형 테마정원에서 폭포와 수목을 감상하고, 당오름 숲길 입구에 있는 우정원베이커리에서 숲 향기를 맡으며 커피와 빵을 즐깁니다.
-          </div>
-          <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">송당 삼나무 숲길 피톤치드 룸스프레이 & 우정원 쑥 파운드케이크 선물세트</span>
+            (연중무휴, 무료 입장) 계단 없이 완만한 대형 수목 테마정원에서 폭포와 연못을 편안하게 감상하고 정원 내 카페에서 티타임을 갖습니다.
           </div>
         </div>
 
         <div class="item">
-          <div class="item-time">16:15 ~ 17:30</div>
+          <div class="item-time">15:50 ~ 17:15</div>
           <div class="item-title">
             <a href="https://search.naver.com/search.naver?query=코코컬처클럽" target="_blank" class="naver-link">
-              코코컬처클럽 둘러보기 & 포토존 <span class="naver-badge">N검색</span>
+              코코컬처클럽 둘러보기 & 오션뷰 포토존 <span class="naver-badge">N검색</span>
             </a>
             <span class="tag-mom">엄마 희망 코스</span>
           </div>
           <div class="item-desc">
-            성산 바닷가에 펼쳐진 1만 평 규모의 초대형 복합문화공간입니다. 해가 지기 전 밝은 시간에 야외 정원과 바다 포토존에서 인생 가족사진을 찍습니다.
-          </div>
-          <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">코코컬처클럽 자체 디자인 오션 감성 유리컵(글라스) & 선셋 에이드 텀블러</span>
+            (연중무휴) 성산 해안가에 펼쳐진 1만 평 규모의 초대형 복합문화공간입니다. 해가 지기 전 밝은 시간에 야외 정원과 바다 배경으로 가족사진을 찍습니다.
           </div>
         </div>
 
         <div class="item">
-          <div class="item-time">17:30 ~ 19:00</div>
+          <div class="item-time">17:15 ~ 18:45</div>
           <div class="item-title">
-            저녁 식사: 코코컬처클럽 흑돼지 & 씨푸드 다이닝
+            저녁 식사: 코코컬처클럽 흑돼지구이 다이닝
           </div>
+          <div class="transit-info">🚗 서귀포호텔 복귀 차량 약 1시간 10분 소요 (야간 안전 운전)</div>
           <div class="food-box">
-            <div><strong>메뉴:</strong> 제주 흑돼지 바비큐 플래터, 해산물 구이, 꼬치구이, 선셋 에이드</div>
-            <div><strong>인기 & 후기:</strong> 파도 소리와 붉은 노을을 정면으로 보며 즐기는 <span class="highlight">흑돼지 바비큐</span>가 불향이 가득해 분위기와 맛 모두 극찬받는 시그니처입니다! (영업마감 19:30이므로 17:30 입장 추천)</div>
+            <div><strong>메뉴:</strong> <span class="highlight">흑돼지구이 세트(68,000원)</span>, 흑돼지 한접시, 얼큰한 흑돼지 김치찌개</div>
+            <div><strong>운영:</strong> 로컬 씨푸드 & 흑돼지 식당은 저녁 22:00까지 여유롭게 운영되므로, 바다 노을을 보며 편안하게 흑돼지 저녁을 즐기실 수 있습니다.</div>
           </div>
         </div>
 
         <div class="item">
-          <div class="item-time">19:00 ~ 20:00</div>
+          <div class="item-time">18:45 ~ 20:00</div>
           <div class="item-title">서귀포호텔 복귀 & 휴식</div>
-          <div class="item-desc">차량으로 약 55분 이동하여 호텔에 안전하게 복귀해 휴식합니다.</div>
+          <div class="item-desc">호텔로 안전하게 복귀하여 편안하게 족욕 및 휴식을 취합니다.</div>
         </div>
       </div>
     </div>
@@ -958,66 +608,55 @@
           <div class="item-time">09:40 ~ 11:30</div>
           <div class="item-title">
             <a href="https://search.naver.com/search.naver?query=협재해수욕장" target="_blank" class="naver-link">
-              협재해수욕장 (비양도 감상 & 오션뷰 카페) <span class="naver-badge">N검색</span>
+              협재해수욕장 (비양도 뷰 감상 & 오션뷰 카페) <span class="naver-badge">N검색</span>
             </a>
           </div>
-          <div class="transit-info">🚗 한림 식당까지 차량 약 15분 소요</div>
+          <div class="transit-info">🚗 한림 식당까지 차량 약 10분 소요</div>
           <div class="item-desc">
-            배를 타지 않고도 에메랄드빛 바다 바로 너머로 비양도가 손에 잡힐 듯 펼쳐지는 제주 최고의 뷰 포인트입니다. 해변 산책과 통유리 카페에서 편안하게 비양도를 감상합니다.
-          </div>
-          <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">협재 바다 조개껍질 캔들 & 비양도 실루엣 패브릭 포스터</span>
+            배를 타지 않고도 에메랄드빛 바다 바로 너머로 비양도가 손에 잡힐 듯 펼쳐지는 제주 최고의 뷰 포인트입니다. 통유리 카페에서 편안하게 비양도를 바라보며 커피를 즐깁니다.
           </div>
         </div>
 
         <div class="item">
           <div class="item-time">11:45 ~ 13:00</div>
           <div class="item-title">
-            점심 식사: 제주 토속 향토음식
+            점심 식사: 한림 바당길 (수요일 정상영업)
           </div>
           <div class="transit-info">🚗 제주시 월평꽃시장까지 차량 약 45분 소요</div>
           <div class="food-box">
             <div>
-              추천 맛집: 
-              <a href="https://search.naver.com/search.naver?query=한림칼국수+본점" target="_blank" class="food-sublink">📍 <strong>한림칼국수</strong> <span class="naver-badge">N</span></a> | 
-              <a href="https://search.naver.com/search.naver?query=한림+바당길" target="_blank" class="food-sublink">📍 <strong>바당길</strong> <span class="naver-badge">N</span></a>
+              <a href="https://search.naver.com/search.naver?query=한림+바당길" target="_blank" class="food-sublink">📍 <strong>한림 바당길 (한림서길 18, 08:00~15:30)</strong> <span class="naver-badge">N</span></a>
             </div>
-            <div style="margin-top:6px;"><strong>메뉴:</strong> 보말칼국수, 보말죽, 톳보말전, 영양닭칼국수</div>
-            <div><strong>인기 & 후기:</strong> 진한 초록빛 국물의 <span class="highlight">보말칼국수</span>와 고소한 <span class="highlight">보말죽</span>은 부드럽고 담백해 마지막 날 식사로 속이 아주 편안하다고 손꼽힙니다.</div>
+            <div style="margin-top:6px;"><strong>메뉴:</strong> 진한 톳보말칼국수, 부드러운 보말죽, 톳칼국수, 전복뚝배기</div>
+            <div><strong>확인:</strong> 수요일 정상영업(목요일만 조기마감) 확인 완료! 할머니와 어머니 모두 속 편안하고 구수하게 마지막 점심을 드실 수 있습니다.</div>
           </div>
         </div>
 
         <div class="item">
           <div class="item-time">13:45 ~ 15:15</div>
           <div class="item-title">
-            <a href="https://search.naver.com/search.naver?query=제주+월평꽃시장" target="_blank" class="naver-link">
-              월평꽃시장 쇼핑 <span class="naver-badge">N검색</span>
+            <a href="https://search.naver.com/search.naver?query=월평동+자연in+화훼" target="_blank" class="naver-link">
+              월평꽃시장 쇼핑 (자연in 화훼공판장) <span class="naver-badge">N검색</span>
             </a>
             <span class="tag-mom">엄마 희망 코스</span>
           </div>
-          <div class="transit-info">🚗 제주시 해안도로/공항까지 차량 약 20~25분 소요</div>
+          <div class="transit-info">🚗 공항 방면 카페로 이동 (차량 약 20분 소요)</div>
           <div class="item-desc">
-            약 1만 7천 평 규모의 초대형 화훼 도매시장입니다. 계절 꽃과 분재, 희귀 식물을 구경하고 택배 배송 접수도 가능해 가볍게 쇼핑하기 좋습니다.
+            제주시 월평동 '자연in' 내 1만 7천 평 규모의 초대형 화훼 도매시장입니다. 계절 꽃, 분재, 관엽 식물을 저렴하게 둘러보고 택배 배송 접수가 가능합니다.
           </div>
           <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">제주 미니 동백나무 / 한라봉·레몬 나무 묘목 (집으로 안심 택배 발송), 공기정화 소형 관엽식물</span>
+            <span class="souvenir-tag">🎁 추천 쇼핑</span>
+            <span class="souvenir-text">제주 미니 동백나무 / 한라봉·레몬 나무 묘목 (집으로 안심 택배 발송)</span>
           </div>
         </div>
 
         <div class="item">
-          <div class="item-time">15:15 ~ 16:30</div>
+          <div class="item-time">15:35 ~ 16:30</div>
           <div class="item-title">
-            <a href="https://search.naver.com/search.naver?query=용담포구+무지개해안도로" target="_blank" class="naver-link">
-              용담 무지개해안도로 드라이브 & 카페 휴식 <span class="naver-badge">N검색</span>
-            </a>
+            공항 근처 오션뷰 카페 휴식 (1일차 중복 코스 대체)
           </div>
-          <div class="item-desc">알록달록 무지개 블록을 배경으로 드라이브를 즐기며 여행을 마무리합니다.</div>
-          <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">해안도로 소품샵의 핸드메이드 감귤 키링 & 동백 자수 에코백</span>
-          </div>
+          <div class="transit-info">🚗 렌터카 반납지까지 차량 약 10분 소요</div>
+          <div class="item-desc">1일차에 다녀온 무지개해안도로 대신, 공항 인근 바다 앞 카페에서 짐을 정리하고 여행을 차분하게 마무리합니다.</div>
         </div>
 
         <div class="item">
@@ -1025,10 +664,10 @@
           <div class="item-title">
             렌터카 반납 & 제주공항 수속 및 출발
           </div>
-          <div class="item-desc">16:30 렌터카 반납 후 공항 수속, 오후 7시 비행기로 기분 좋게 귀가합니다.</div>
+          <div class="item-desc">16:30 렌터카 반납 완료 후 여유롭게 탑승 수속을 밟고, 19:00 비행기로 기분 좋게 귀가합니다.</div>
           <div class="souvenir-box">
-            <span class="souvenir-tag">🎁 추천 기념품</span>
-            <span class="souvenir-text">공항 3층 파리바게뜨 제주 마음샌드(우도 땅콩샌드), 면세점 제주 감귤 랑그드샤 과자세트</span>
+            <span class="souvenir-tag">🎁 공항 선물</span>
+            <span class="souvenir-text">공항 3층 파리바게뜨 제주 마음샌드(우도 땅콩샌드), 면세점 감귤 초콜릿 세트</span>
           </div>
         </div>
       </div>
@@ -1037,7 +676,7 @@
     <!-- 예상 경비 섹션 -->
     <div class="budget-card">
       <div class="budget-header">
-        <h3 class="budget-title">💰 4인 예상 경비 안내 (숙소·렌터카 제외)</h3>
+        <h3 class="budget-title">💰 4인 실속 예상 경비 (숙소·렌터카 제외)</h3>
       </div>
       <table class="budget-table">
         <thead>
@@ -1052,50 +691,50 @@
             <td><strong>식비</strong></td>
             <td>
               - 1일차 아침(혜린&엄마): 고기국수/전복죽 (~25,000)<br>
-              - 1일차 저녁: 중문 갈치구이/조림 세트 (~130,000)<br>
+              - 1일차 저녁: 중문 통갈치구이/조림 세트 (~130,000)<br>
               - 2일차 점심: 올레시장 모둠회+매운탕 점심 식사 (~90,000)<br>
-              - 2일차 저녁: 사계리 성게미역국 & 전복뚝배기 (~70,000)<br>
-              - 3일차 점심: 송당 우럭정식 & 보말죽 (~60,000)<br>
-              - 3일차 저녁: 코코컬처클럽 흑돼지 바비큐 (~160,000)<br>
-              - 4일차 점심: 보말칼국수 & 보말죽 한식 (~55,000)<br>
-              - 간식 및 야식 (메밀닭강정, 감귤모찌, 공항 간식 등): (~50,000)
+              - 2일차 저녁: 산방산 성게미역국 & 전복뚝배기 (~70,000)<br>
+              - 3일차 점심: 송당 우럭정식 (~60,000)<br>
+              - 3일차 저녁: 코코컬처클럽 흑돼지구이 세트 (~150,000)<br>
+              - 4일차 점심: 한림 바당길 보말칼국수 & 보말죽 (~55,000)<br>
+              - 간식 및 야식 (메밀닭강정, 감귤모찌, 시장 간식 등): (~50,000)
             </td>
-            <td style="text-align:right; vertical-align:top; font-weight:700;">약 640,000원</td>
+            <td style="text-align:right; vertical-align:top; font-weight:700;">약 630,000원</td>
           </tr>
           <tr>
             <td><strong>카페 & 다과</strong></td>
-            <td>용담 오션뷰 카페(모닝), 마노르블랑, 오설록, 우정원베이커리, 협재 오션뷰 카페</td>
-            <td style="text-align:right; font-weight:700;">약 160,000원</td>
+            <td>용담/테우 오션뷰 카페(2회), 오설록, 협재 오션뷰 카페 음료 및 디저트 (마노르블랑은 아래 입장료에 포함)</td>
+            <td style="text-align:right; font-weight:700;">약 150,000원</td>
           </tr>
           <tr>
             <td><strong>입장료 & 온천</strong></td>
             <td>
-              - 화조원 (성인 18,000원 / 경로 14,000원 적용 시 약 64,000원)<br>
-              - 산방산 탄산온천 실내외 노천탕 (약 55,000원)<br>
+              - 화조원 (성인 3명 54,000원 + 경로 1명 14,000원 = 68,000원)<br>
+              - 산방산 탄산온천 실내+노천탕 (1인 19,000원 x 4 = 76,000원 + 수영복 대여료 포함 약 84,000원)<br>
               - 마노르블랑 입장료/음료 (약 24,000원)
             </td>
-            <td style="text-align:right; font-weight:700;">약 143,000원</td>
+            <td style="text-align:right; font-weight:700;">약 172,000원</td>
           </tr>
           <tr>
             <td><strong>유류비 & 주차</strong></td>
             <td>3박 4일 일정 주유비 및 공영주차장 요금</td>
-            <td style="text-align:right; font-weight:700;">약 60,000원</td>
+            <td style="text-align:right; font-weight:700;">약 65,000원</td>
           </tr>
           <tr class="total-row">
             <td colspan="2">총 예상 경비 합계 (4인 기준)</td>
-            <td style="text-align:right;">약 98만 ~ 103만 원</td>
+            <td style="text-align:right;">약 101만 ~ 105만 원</td>
           </tr>
         </tbody>
       </table>
       <div class="budget-note">
-        ※ 1일차 혜린&엄마 모닝 아침 식사와 오션뷰 카페 비용까지 포함하여 알차게 계산했습니다.
+        ※ 탄산온천 노천탕 실요금(1인 19,000원) 및 수영복 대여료를 정밀 반영하여 계산했습니다.
       </div>
     </div>
 
-    <!-- 가족 댓글/의견 남기기 섹션 -->
+    <!-- 가족 댓글 및 카카오톡 공유 섹션 -->
     <div class="comment-card">
       <h3>💬 가족 여행 의견 나누기</h3>
-      <p class="comment-intro">가고 싶은 식당이나 관광지가 있거나 일정을 바꾸고 싶다면 자유롭게 적어주세요! 😊</p>
+      <p class="comment-intro">가고 싶은 곳이나 변경할 일정을 적고, [카톡으로 공유하기]를 누르면 내용이 복사되어 가족 단톡방에 바로 붙여넣기(Ctrl+V) 하실 수 있습니다! 😊</p>
       
       <form class="comment-form" id="commentForm">
         <div class="comment-inputs">
@@ -1105,10 +744,13 @@
             <option value="이모">이모 🌸</option>
             <option value="혜린">혜린 💖</option>
           </select>
-          <input type="text" id="targetInput" placeholder="관련 장소 (예: 1일차 아침, 2일차 점심 회, 새로운 카페 등)" />
+          <input type="text" id="targetInput" placeholder="관련 장소 (예: 1일차 아침, 2일차 점심 회, 카페 등)" />
         </div>
-        <textarea id="commentContent" placeholder="여기에 의견을 입력해주세요! (예: 회 먹을 때 매운탕도 꼭 끓여 먹자 / 여기 카페 대신 빵집 가고 싶어)" required></textarea>
-        <button type="submit" class="comment-submit-btn">의견 남기기</button>
+        <textarea id="commentContent" placeholder="여기에 의견을 입력해주세요! (예: 회 먹을 때 매운탕 꼭 끓여 먹자 / 여기 대신 다른 빵집 가고 싶어)" required></textarea>
+        <div class="btn-row">
+          <button type="button" class="share-kakao-btn" onclick="shareToKakao()">💬 카톡으로 공유하기</button>
+          <button type="submit" class="comment-submit-btn">페이지에 저장</button>
+        </div>
       </form>
 
       <div class="comment-list" id="commentList"></div>
@@ -1119,12 +761,10 @@
     </footer>
   </div>
 
-  <!-- Leaflet Map Script -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     var map = L.map('map').setView([33.38, 126.54], 10);
 
-    // VWorld 한글 지도
     L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
       maxZoom: 18,
       minZoom: 7,
@@ -1143,12 +783,11 @@
       { name: "산방산 탄산온천 (밤 노천탕)", lat: 33.2483, lng: 126.3072, color: "#2980b9", day: "2일차 19:00", query: "산방산탄산온천" },
 
       { name: "신풍바다목장", lat: 33.3486, lng: 126.8661, color: "#27ae60", day: "3일차", query: "신풍신천바다목장" },
-      { name: "제주동화마을 & 우정원베이커리", lat: 33.4502, lng: 126.7328, color: "#27ae60", day: "3일차", query: "송당동화마을" },
+      { name: "제주동화마을 테마정원", lat: 33.4502, lng: 126.7328, color: "#27ae60", day: "3일차", query: "송당동화마을" },
       { name: "코코컬처클럽 (흑돼지 다이닝)", lat: 33.4332, lng: 126.9168, color: "#27ae60", day: "3일차 저녁", query: "코코컬처클럽" },
 
       { name: "협재해수욕장 (비양도 뷰)", lat: 33.3941, lng: 126.2397, color: "#e67e22", day: "4일차", query: "협재해수욕장" },
-      { name: "월평꽃시장", lat: 33.4735, lng: 126.5828, color: "#e67e22", day: "4일차", query: "제주월평꽃시장" },
-      { name: "용담 무지개해안도로", lat: 33.5074, lng: 126.4764, color: "#e67e22", day: "4일차", query: "용담포구무지개해안도로" }
+      { name: "월평꽃시장 (자연in)", lat: 33.4735, lng: 126.5828, color: "#e67e22", day: "4일차", query: "월평동자연in화훼" }
     ];
 
     spots.forEach(function(spot) {
@@ -1171,22 +810,9 @@
       marker.bindPopup(popupHtml);
     });
 
-    // 댓글 기능 (Local Storage 기반)
     var defaultComments = [
-      {
-        id: 1,
-        author: "엄마",
-        target: "1일차 아침 & 2일차 시장",
-        text: "아침에 고기국수 먹고 사진 찍자! 2일차 아침 올레시장 회도 기대된다 ㅎㅎ",
-        date: "2026-10-15"
-      },
-      {
-        id: 2,
-        author: "할머니",
-        target: "2일차 밤 온천",
-        text: "낮에 예쁜 꽃 구경하고 밤에 따뜻하게 온천 지지니 참 좋겠구나.",
-        date: "2026-10-15"
-      }
+      { id: 1, author: "엄마", target: "1일차 아침 & 2일차 시장", text: "아침에 고기국수 먹고 사진 찍자! 올레시장 모둠회도 기대된다 ㅎㅎ", date: "2026-10-16" },
+      { id: 2, author: "할머니", target: "2일차 밤 온천", text: "낮에 예쁜 꽃 구경하고 밤에 따뜻하게 온천 지지니 참 좋겠구나.", date: "2026-10-16" }
     ];
 
     function loadComments() {
@@ -1202,11 +828,6 @@
       var comments = loadComments();
       var listEl = document.getElementById('commentList');
       listEl.innerHTML = '';
-
-      if (comments.length === 0) {
-        listEl.innerHTML = '<div style="text-align:center;color:#999;font-size:0.85rem;padding:15px;">아직 남겨진 의견이 없어요. 첫 번째 의견을 남겨보세요!</div>';
-        return;
-      }
 
       comments.forEach(function(item) {
         var card = document.createElement('div');
@@ -1237,20 +858,12 @@
       var author = document.getElementById('authorSelect').value;
       var target = document.getElementById('targetInput').value.trim();
       var content = document.getElementById('commentContent').value.trim();
-
       if (!content) return;
 
       var now = new Date();
       var dateStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
 
-      var newComment = {
-        id: Date.now(),
-        author: author,
-        target: target,
-        text: content,
-        date: dateStr
-      };
-
+      var newComment = { id: Date.now(), author: author, target: target, text: content, date: dateStr };
       var comments = loadComments();
       comments.unshift(newComment);
       saveComments(comments);
@@ -1259,6 +872,27 @@
       document.getElementById('targetInput').value = '';
       renderComments();
     });
+
+    window.shareToKakao = function() {
+      var author = document.getElementById('authorSelect').value;
+      var target = document.getElementById('targetInput').value.trim();
+      var content = document.getElementById('commentContent').value.trim();
+
+      if (!content) {
+        alert('카톡으로 전송할 의견 내용을 먼저 입력해주세요!');
+        return;
+      }
+
+      var textToSend = "[제주 여행 의견 - " + author + "]\n" + (target ? "📍 관련 일정: " + target + "\n" : "") + "💬 내용: " + content + "\n\n🔗 일정표 보기: " + window.location.href;
+      
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(textToSend).then(function() {
+          alert('의견이 복사되었습니다! 가족 카톡방에 바로 붙여넣기(Ctrl+V) 해주세요 😊');
+        });
+      } else {
+        alert(textToSend);
+      }
+    };
 
     renderComments();
   </script>
